@@ -1,0 +1,7 @@
+{
+    "files.autoSave": "onFocusChange",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "notebook.defaultFormatter": "biomejs.biome",
+    "editor.defaultFormatter": "biomejs.biome"
+}

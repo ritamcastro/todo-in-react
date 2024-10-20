@@ -1,0 +1,20 @@
+{
+  "name": "drive-the-session",
+  "version": "0.0.1",
+  "description": "Driving the session",
+  "main": "index.js",
+  "scripts": {
+    "lint": "npx @biomejs/biome check --write ./tests/",
+    "pretest": "npx playwright install --with-deps",
+    "test": "npx playwright test",
+    "test-ui": "playwright test --ui"
+  },
+  "keywords": [],
+  "author": "ritamcastro@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@playwright/test": "^1.48.1",
+    "@types/node": "^22.7.7"
+  }
+}
