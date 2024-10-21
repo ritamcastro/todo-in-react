@@ -26,3 +26,21 @@ test("01 - Initial Render for the ToDo app", async ({ page }) => {
   // await expect(footer.getByText("Made with 💜")).toBeVisible()
 })
 
+test("02 - Displays a complete ToDo with a different style", async ({page}) => {
+  await page.goto("/");
+  
+  const main = page.getByRole("main")
+    
+  const checkbox = main.getByRole("checkbox")
+  await expect(checkbox).toBeVisible()
+  await expect(checkbox).not.toBeChecked()
+
+  const todoText = main.getByPlaceholder("Add a new todo")
+  await expect(todoText).toBeVisible()
+  await expect(todoText).toHaveCSS('text-decoration', /none/);
+
+  await checkbox.check();
+
+  await expect(checkbox).toBeChecked();
+  await expect(todoText).toHaveCSS('text-decoration', /line-through/);   
+})
