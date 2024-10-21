@@ -23,5 +23,6 @@ test("01 - Initial Render for the ToDo app", async ({ page }) => {
   // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/contentinfo_role
   const footer = page.getByRole("contentinfo")
   await expect(footer).toBeVisible()
+  // await expect(footer.getByText("Made with 💜")).toBeVisible()
 })
 
