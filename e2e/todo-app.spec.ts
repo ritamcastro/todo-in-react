@@ -44,3 +44,27 @@ test("02 - Displays a complete ToDo with a different style", async ({page}) => {
   await expect(checkbox).toBeChecked();
   await expect(todoText).toHaveCSS('text-decoration', /line-through/);   
 })
+
+test("03 - Adds new ToDos to the list", async ({page}) => {
+  await page.goto("/");
+
+  const main = page.getByRole("main")
+  
+  const addButton = main.getByRole("button", {name: "New"})
+  await expect(addButton).toBeVisible()
+
+  // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/list_role
+  const todoList = main.getByRole("list")
+  await expect(todoList).toBeVisible()
+
+  const todoItems = todoList.getByRole("listitem")
+  expect(todoItems).toHaveCount(1)
+
+  await todoList.getByPlaceholder("Add a new todo").fill("This is the first item")
+  
+  await addButton.click()
+
+  await todoList.getByPlaceholder("Add a new todo").nth(1).fill("This is the second item")
+  
+  expect(todoItems).toHaveCount(2)
+})
