@@ -15,9 +15,14 @@ const App = () => {
     const updatedItems = items.map((item) => {
       return item.id === id ? { ...item, isDone: !item.isDone } : item
     })
-
     setItems(updatedItems)
   }
+
+  const onDeleteItem = id => {
+    const updatedItems = items.filter(item => item.id !== id)
+    setItems(updatedItems)
+  }
+
   const addTodo = () => {
     setItems([...items, { id: Date.now(), isDone: false, text: "" }])
   }
@@ -30,8 +35,7 @@ const App = () => {
       <button onClick={() => addTodo()}>New</button>
       <div role="list">
         {sortedItems.map((item) => {
-          return <div
-            role="listitem"
+          return <div role="listitem"
             key={item.id}>
             <input type="checkbox"
               checked={item.isDone}
@@ -41,7 +45,15 @@ const App = () => {
               value={item.text}
               onChange={(e) => onTextChange(item.id, e.target.value)}
               style={{ textDecoration: item.isDone ? 'line-through' : 'none' }} />
+            <button
+              aria-label="Delete"
+              type="button"
+              onClick={() => onDeleteItem(item.id)}
+            >
+              🗑️
+            </button>
           </div>
+
         })}
       </div>
     </main>
