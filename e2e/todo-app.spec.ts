@@ -68,3 +68,26 @@ test("03 - Adds new ToDos to the list", async ({page}) => {
   
   expect(todoItems).toHaveCount(2)
 })
+
+test("04 - Sorts the ToDos according to their status", async ({page}) => {
+  await page.goto("/");
+
+  const main = page.getByRole("main")
+  const addButton = main.getByRole("button", {name: "New"})
+  const todoList = main.getByRole("list")
+ 
+  await todoList.getByPlaceholder("Add a new todo").fill("This is the first item")
+    
+  await addButton.click()
+  await addButton.click()
+
+  await todoList.getByPlaceholder("Add a new todo").nth(1).fill("This is the second item")
+  await todoList.getByPlaceholder("Add a new todo").nth(2).fill("This is the third item")
+   
+  const itemMarkedAsDone = todoList.getByRole("checkbox").nth(1)
+  await itemMarkedAsDone.check()
+
+  await expect(todoList.getByRole("textbox").first()).toHaveValue("This is the first item")
+  await expect(todoList.getByRole("textbox").nth(1)).toHaveValue("This is the third item")
+  await expect(todoList.getByRole("textbox").nth(2)).toHaveValue("This is the second item")
+})
