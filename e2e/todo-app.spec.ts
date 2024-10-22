@@ -26,11 +26,11 @@ test("01 - Initial Render for the ToDo app", async ({ page }) => {
   // await expect(footer.getByText("Made with 💜")).toBeVisible()
 })
 
-test("02 - Displays a complete ToDo with a different style", async ({page}) => {
+test("02 - Displays a complete ToDo with a different style", async ({ page }) => {
   await page.goto("/");
-  
+
   const main = page.getByRole("main")
-    
+
   const checkbox = main.getByRole("checkbox")
   await expect(checkbox).toBeVisible()
   await expect(checkbox).not.toBeChecked()
@@ -42,15 +42,15 @@ test("02 - Displays a complete ToDo with a different style", async ({page}) => {
   await checkbox.check();
 
   await expect(checkbox).toBeChecked();
-  await expect(todoText).toHaveCSS('text-decoration', /line-through/);   
+  await expect(todoText).toHaveCSS('text-decoration', /line-through/);
 })
 
-test("03 - Adds new ToDos to the list", async ({page}) => {
+test("03 - Adds new ToDos to the list", async ({ page }) => {
   await page.goto("/");
 
   const main = page.getByRole("main")
-  
-  const addButton = main.getByRole("button", {name: "New"})
+
+  const addButton = main.getByRole("button", { name: "New" })
   await expect(addButton).toBeVisible()
 
   // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/list_role
@@ -61,29 +61,29 @@ test("03 - Adds new ToDos to the list", async ({page}) => {
   expect(todoItems).toHaveCount(1)
 
   await todoList.getByPlaceholder("Add a new todo").fill("This is the first item")
-  
+
   await addButton.click()
 
   await todoList.getByPlaceholder("Add a new todo").nth(1).fill("This is the second item")
-  
+
   expect(todoItems).toHaveCount(2)
 })
 
-test("04 - Sorts the ToDos according to their status", async ({page}) => {
+test("04 - Sorts the ToDos according to their status", async ({ page }) => {
   await page.goto("/");
 
   const main = page.getByRole("main")
-  const addButton = main.getByRole("button", {name: "New"})
+  const addButton = main.getByRole("button", { name: "New" })
   const todoList = main.getByRole("list")
- 
+
   await todoList.getByPlaceholder("Add a new todo").fill("This is the first item")
-    
+
   await addButton.click()
   await addButton.click()
 
   await todoList.getByPlaceholder("Add a new todo").nth(1).fill("This is the second item")
   await todoList.getByPlaceholder("Add a new todo").nth(2).fill("This is the third item")
-   
+
   const itemMarkedAsDone = todoList.getByRole("checkbox").nth(1)
   await itemMarkedAsDone.check()
 
@@ -92,28 +92,44 @@ test("04 - Sorts the ToDos according to their status", async ({page}) => {
   await expect(todoList.getByRole("textbox").nth(2)).toHaveValue("This is the second item")
 })
 
-test("05 - Deletes a ToDo item from the list ", async ({page}) => {
+test("05 - Deletes a ToDo item from the list ", async ({ page }) => {
   await page.goto("/");
 
   const main = page.getByRole("main")
-  const addButton = main.getByRole("button", {name: "New"})
+  const addButton = main.getByRole("button", { name: "New" })
   const todoList = main.getByRole("list")
- 
+
   await todoList.getByPlaceholder("Add a new todo").fill("This is the reference item")
-    
+
   await addButton.click()
   await addButton.click()
   await todoList.getByPlaceholder("Add a new todo").nth(1).fill("This is the item to delete")
   await todoList.getByPlaceholder("Add a new todo").nth(2).fill("This is another item")
-   
+
   const todoItems = todoList.getByRole("listitem")
   expect(todoItems).toHaveCount(3)
 
-  const deleteButton = todoItems.getByRole("button", {name: "Delete"})
+  const deleteButton = todoItems.getByRole("button", { name: "Delete" })
   expect(deleteButton).toHaveCount(3)
 
   await deleteButton.nth(1).click()
 
   expect(todoItems).toHaveCount(2)
-  await expect(page.getByText("This is the item to delete")).not.toBeVisible()
+  await expect(page.getByText("This is the item to delete")).not.toBeInViewport()
+})
+
+test("06 - Keeps the todos when reloading the page", async ({ page }) => {
+  await page.goto("/");
+
+  const main = page.getByRole("main")
+  const todoList = main.getByRole("list")
+  await todoList.getByPlaceholder("Add a new todo").fill("One todo")
+
+  const todoItems = todoList.getByRole("listitem")
+  expect(todoItems).toHaveCount(1)
+
+  await page.reload()
+
+  await expect(page.getByRole("textbox")).toHaveValue("One todo")
+  expect(todoItems).toHaveCount(1)
 })
