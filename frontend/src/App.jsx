@@ -22,12 +22,14 @@ const App = () => {
     setItems([...items, { id: Date.now(), isDone: false, text: "" }])
   }
 
+  const sortedItems = [...items].sort((a, b) => a.isDone - b.isDone)
+
   return <>
     <header>To-Do in React</header>
     <main>
       <button onClick={() => addTodo()}>New</button>
       <div role="list">
-        {items.map((item) => {
+        {sortedItems.map((item) => {
           return <div
             role="listitem"
             key={item.id}>
