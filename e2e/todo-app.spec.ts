@@ -91,3 +91,29 @@ test("04 - Sorts the ToDos according to their status", async ({page}) => {
   await expect(todoList.getByRole("textbox").nth(1)).toHaveValue("This is the third item")
   await expect(todoList.getByRole("textbox").nth(2)).toHaveValue("This is the second item")
 })
+
+test("05 - Deletes a ToDo item from the list ", async ({page}) => {
+  await page.goto("/");
+
+  const main = page.getByRole("main")
+  const addButton = main.getByRole("button", {name: "New"})
+  const todoList = main.getByRole("list")
+ 
+  await todoList.getByPlaceholder("Add a new todo").fill("This is the reference item")
+    
+  await addButton.click()
+  await addButton.click()
+  await todoList.getByPlaceholder("Add a new todo").nth(1).fill("This is the item to delete")
+  await todoList.getByPlaceholder("Add a new todo").nth(2).fill("This is another item")
+   
+  const todoItems = todoList.getByRole("listitem")
+  expect(todoItems).toHaveCount(3)
+
+  const deleteButton = todoItems.getByRole("button", {name: "Delete"})
+  expect(deleteButton).toHaveCount(3)
+
+  await deleteButton.nth(1).click()
+
+  expect(todoItems).toHaveCount(2)
+  await expect(page.getByText("This is the item to delete")).not.toBeVisible()
+})
