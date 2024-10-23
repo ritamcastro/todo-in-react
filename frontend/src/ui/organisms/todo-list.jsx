@@ -1,11 +1,8 @@
-import InlineCard from '../molecules/inline-card'
 import useTodos from '../../hooks/use-todos'
+import InlineCard from '../molecules/inline-card'
 
 const TodoList = () => {
-
-  const { items,
-    onTextChange, onToggleItem, onDeleteItem, addTodo
-  } = useTodos()
+  const { items, onTextChange, onToggleItem, onDeleteItem, addTodo } = useTodos()
 
   return (
     <>
@@ -16,14 +13,15 @@ const TodoList = () => {
         New
       </button>
       <div role="list">
-        {items.map(item =>
-          <InlineCard key={item.id}
+        {items.map(item => (
+          <InlineCard
+            key={item.id}
             item={item}
             onToggle={() => onToggleItem(item.id)}
             onChangeText={newText => onTextChange(item.id, newText)}
             onDelete={() => onDeleteItem(item.id)}
           />
-        )}
+        ))}
       </div>
     </>
   )

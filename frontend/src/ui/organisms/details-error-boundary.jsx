@@ -1,5 +1,4 @@
 const DetailsErrorBoundary = () => {
-
   return (
     <>
       <p>💀</p>
