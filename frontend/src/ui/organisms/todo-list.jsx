@@ -1,17 +1,10 @@
-import { useEffect, useState } from 'react'
 import InlineCard from '../molecules/inline-card'
+import useStorage from '../../hooks/use-storage'
 
 const TodoList = () => {
-  // As a first approach, let's save on the browser's localStorage for simplicity
-  const [items, setItems] = useState(() => {
-    const savedItems = localStorage.getItem('todoItems')
-    return savedItems ? JSON.parse(savedItems) : [{ isDone: false, text: '', id: Date.now() }]
-  })
 
-  useEffect(() => {
-    localStorage.setItem('todoItems', JSON.stringify(items))
-  }, [items])
 
+  const { items, setItems } = useStorage()
   // Attention on () and returns, thanks GPT! ;)
   const onTextChange = (id, value) => {
     const updatedItems = items.map(item => (item.id === id ? { ...item, text: value } : item))
