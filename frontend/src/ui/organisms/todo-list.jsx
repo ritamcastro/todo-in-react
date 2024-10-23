@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
+import InlineCard from '../molecules/inline-card'
 
-const App = () => {
+const TodoList = () => {
   // As a first approach, let's save on the browser's localStorage for simplicity
   const [items, setItems] = useState(() => {
     const savedItems = localStorage.getItem('todoItems')
@@ -37,50 +38,24 @@ const App = () => {
   const sortedItems = [...items].sort((a, b) => a.isDone - b.isDone)
 
   return (
-    <>
-      <header>To-Do in React</header>
-      <main>
-        <button
-          type="button"
-          onClick={() => addTodo()}
-        >
-          New
-        </button>
-        <div role="list">
-          {sortedItems.map(item => {
-            return (
-              <div
-                role="listitem"
-                key={item.id}
-              >
-                <input
-                  type="checkbox"
-                  checked={item.isDone}
-                  onChange={() => {
-                    onToggleItem(item.id)
-                  }}
-                />
-                <input
-                  type="text"
-                  placeholder="Add a new todo"
-                  value={item.text}
-                  onChange={e => onTextChange(item.id, e.target.value)}
-                  style={{ textDecoration: item.isDone ? 'line-through' : 'none' }}
-                />
-                <button
-                  aria-label="Delete"
-                  type="button"
-                  onClick={() => onDeleteItem(item.id)}
-                >
-                  🗑️
-                </button>
-              </div>
-            )
-          })}
-        </div>
-      </main>
-      <footer>Made with 💜</footer>
-    </>
+    <main>
+      <button
+        type="button"
+        onClick={() => addTodo()}
+      >
+        New
+      </button>
+      <div role="list">
+        {sortedItems.map(item =>
+          <InlineCard key={item.id}
+            item={item}
+            onToggle={() => onToggleItem(item.id)}
+            onChangeText={newText => onTextChange(item.id, newText)}
+            onDelete={() => onDeleteItem(item.id)}
+          />
+        )}
+      </div>
+    </main>
   )
 }
 
@@ -98,4 +73,4 @@ const App = () => {
 //   )
 // }
 
-export default App
+export default TodoList

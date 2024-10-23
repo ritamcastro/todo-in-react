@@ -1,9 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
+import TodoList from './ui/organisms/todo-list.jsx'
+import Layout from './ui/templates/layout.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <Layout>
+      <TodoList />
+    </Layout>
   </StrictMode>
 )
