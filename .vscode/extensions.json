@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "biomejs.biome",
+        "davidanson.vscode-markdownlint",
+        "eamodio.gitlens",
+        "mechatroner.rainbow-csv",
+        "mhutchie.git-graph",
+        "ms-playwright.playwright",
+        "pflannery.vscode-versionlens",
+        "rangav.vscode-thunder-client",
+        "seatonjiang.gitmoji-vscode",
+    ]
+}
