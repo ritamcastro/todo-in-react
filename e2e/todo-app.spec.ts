@@ -156,7 +156,6 @@ test("07 - Sees more information for a ToDo item on a new page", async ({ page }
   await expect(footer).toBeVisible()
 })
 
-
 test("08 - Sees an error page for an unexisting ToDo and is able to get back to the home page", async ({ page }) => {
   await page.goto("/details/20241024");
 
@@ -175,6 +174,34 @@ test("08 - Sees an error page for an unexisting ToDo and is able to get back to 
   await expect(main.getByText("💀")).toBeVisible()
   await expect(main.getByText("🔎 This ToDo (#20241024) does not exist.")).toBeVisible()
   await expect(main.getByText("🔙 Time to go back home...")).toBeVisible()
+
+  await homeButton.click()
+
+  await expect(page).toHaveURL("/")
+  await expect(page.getByRole("button", { name: "New" })).toBeVisible()
+})
+
+test("09 - Sees a generic error page for an unexisting route in the ToDo app", async ({ page }) => {
+  await page.goto("/where/the/hell/am/i");
+
+  const main = page.getByRole("main")
+  await expect(main.getByText("💀")).toBeVisible()
+  await expect(main.getByText("🤨 Where are you? This seems like a wrong turn.")).toBeVisible()
+  await expect(main.getByText("🏠 Time to go back home...")).toBeVisible()
+
+
+
+  // This part ensures the existence of the main template
+  const header = page.getByRole("banner")
+  await expect(header.getByText("To-Do in React")).toBeVisible()
+  // Is it really a button? 
+  // const homeButton = header.getByRole("button", { name: "Home" })
+  const homeButton = header.getByRole("link", { name: "Home" })
+
+
+  const footer = page.getByRole("contentinfo")
+  await expect(footer).toBeVisible()
+
 
   await homeButton.click()
 
