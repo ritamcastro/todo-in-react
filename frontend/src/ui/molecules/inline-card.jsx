@@ -1,4 +1,8 @@
+import { useNavigate } from 'react-router-dom'
+
 const InlineCard = ({ item, onToggle, onChangeText, onDelete }) => {
+    const navigate = useNavigate()
+
     return <div
         role="listitem"
         key={item.id}
@@ -6,9 +10,7 @@ const InlineCard = ({ item, onToggle, onChangeText, onDelete }) => {
         <input
             type="checkbox"
             checked={item.isDone}
-            onChange={() => {
-                onToggle(item.id)
-            }}
+            onChange={() => { onToggle() }}
         />
         <input
             type="text"
@@ -17,6 +19,13 @@ const InlineCard = ({ item, onToggle, onChangeText, onDelete }) => {
             onChange={e => onChangeText(e.target.value)}
             style={{ textDecoration: item.isDone ? 'line-through' : 'none' }}
         />
+        <button
+            aria-label="See more"
+            type="button"
+            onClick={() => navigate(`/details/${item.id}`)}
+        >
+            👀
+        </button>
         <button
             aria-label="Delete"
             type="button"
