@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Layout from './ui/templates/layout'
 
-const ToDoApp = ({ children }) => {
+const ToDoApp = () => {
   return (
     <Layout>
       <Outlet />
