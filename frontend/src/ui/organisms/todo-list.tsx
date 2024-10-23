@@ -1,4 +1,4 @@
-import useTodos from '../../hooks/use-todos'
+import { useTodos } from '../../hooks/use-todos'
 import InlineCard from '../molecules/inline-card'
 
 const TodoList = () => {
@@ -12,7 +12,21 @@ const TodoList = () => {
       >
         New
       </button>
-      <div role="list">
+
+      {/* 
+      See MDN on list and listitem
+      https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/list_role
+      https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listitem_role 
+      to fix biome's linting error 
+      https://biomejs.dev/linter/rules/use-semantic-elements/
+      */}
+      <ul
+        style={{
+          listStyle: 'none none',
+          paddingInlineStart: 0,
+          marginBlock: 0
+        }}
+      >
         {items.map(item => (
           <InlineCard
             key={item.id}
@@ -22,7 +36,7 @@ const TodoList = () => {
             onDelete={() => onDeleteItem(item.id)}
           />
         ))}
-      </div>
+      </ul>
     </>
   )
 }

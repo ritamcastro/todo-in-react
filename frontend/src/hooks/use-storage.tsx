@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
+import type { ToDoItem } from '../types/todo'
 
 const useStorage = () => {
   // As a first approach, let's save on the browser's localStorage for simplicity
-  const [items, setItems] = useState(() => {
+  const [items, setItems] = useState<ToDoItem[]>(() => {
     const savedItems = localStorage.getItem('todoItems')
-    return savedItems ? JSON.parse(savedItems) : [{ isDone: false, text: '', id: Date.now() }]
+    const parsedItems: ToDoItem[] = savedItems ? JSON.parse(savedItems) : []
+
+    return savedItems ? parsedItems : [{ isDone: false, text: '', id: Date.now() }]
   })
 
   useEffect(() => {

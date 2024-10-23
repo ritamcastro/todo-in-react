@@ -1,6 +1,15 @@
+import type React from 'react'
 import { useNavigate } from 'react-router-dom'
+import type { ToDoItem } from '../../types/todo'
 
-const InlineCard = ({ item, onToggle, onChangeText, onDelete }) => {
+interface Props {
+  item: ToDoItem
+  onChangeText: (text: string) => void
+  onToggle: () => void
+  onDelete: (id: number) => void
+}
+
+const InlineCard: React.FC<Props> = ({ item, onChangeText, onToggle, onDelete }) => {
   const navigate = useNavigate()
 
   const ariaLabelForCheckbox = `Mark todo "${item.text}" as ${item.isDone ? 'done' : 'not done'}`

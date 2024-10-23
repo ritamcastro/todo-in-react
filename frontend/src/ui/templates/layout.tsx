@@ -1,6 +1,11 @@
+import type { JSX, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: ReactNode
+}
+
+const Layout = ({ children }: LayoutProps): JSX.Element => {
   return (
     <>
       <header>
