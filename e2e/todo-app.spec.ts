@@ -133,3 +133,26 @@ test("06 - Keeps the todos when reloading the page", async ({ page }) => {
   await expect(page.getByRole("textbox")).toHaveValue("One todo")
   expect(todoItems).toHaveCount(1)
 })
+
+test("07 - Sees more information for a ToDo item on a new page", async ({ page }) => {
+  await page.goto("/");
+
+  const main = page.getByRole("main")
+  const todoList = main.getByRole("list")
+  await todoList.getByPlaceholder("Add a new todo").fill("Check React Router")
+
+  const seeMoreButton = todoList.getByRole("button", { name: "See more" })
+  await seeMoreButton.click()
+
+  await expect(page).toHaveURL(/details/i)
+
+  const header = page.getByRole("banner")
+  await expect(header).toBeVisible()
+  await expect(header.getByText("To-Do in React")).toBeVisible()
+
+  await expect(page.getByRole("heading", { name: "Detailed ToDo" })).toBeVisible()
+
+  const footer = page.getByRole("contentinfo")
+  await expect(footer).toBeVisible()
+})
+
