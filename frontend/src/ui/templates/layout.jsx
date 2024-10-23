@@ -1,12 +1,18 @@
-import { Outlet } from "react-router-dom"
+import { Link } from 'react-router-dom'
 
 const Layout = ({ children }) => {
   return (
     <>
       <header>
+        <Link
+          aria-label="Home"
+          to={'/'}
+        >
+          🏠
+        </Link>
         To-Do in React
       </header>
-      <Outlet>{children}</Outlet>
+      <main>{children}</main>
       <footer>Made with 💜</footer>
     </>
   )

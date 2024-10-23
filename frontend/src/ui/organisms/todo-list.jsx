@@ -8,7 +8,7 @@ const TodoList = () => {
   } = useTodos()
 
   return (
-    <main>
+    <>
       <button
         type="button"
         onClick={() => addTodo()}
@@ -25,7 +25,7 @@ const TodoList = () => {
           />
         )}
       </div>
-    </main>
+    </>
   )
 }
 

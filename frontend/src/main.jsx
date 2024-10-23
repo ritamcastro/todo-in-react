@@ -5,15 +5,21 @@ import Layout from './ui/templates/layout.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Details from './ui/organisms/details.jsx'
 
+import ToDoApp from './todo-app.jsx'
+import ErrorBoundary from './ui/organisms/details-error-boundary.jsx'
+
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: <ToDoApp />,
     children: [
-      { index: true, element: <TodoList /> },
+      {
+        index: true, element: <TodoList />,
+      },
       {
         path: '/details/:id',
-        element: <Details />
+        element: <Details />,
+        errorElement: <ErrorBoundary />
       }
     ]
   }
