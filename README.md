@@ -43,6 +43,23 @@ npm run test
 
 ## Test driven development as our guide
 
+### Some considerations about `App.tsx`
+
+When Vite scafolds the React app it creates a set of files, in particular `App.tsx` that contains a single React components that is the backbone of our application.
+
+This component is declared using a traditional funcion declaration rather than the arrow function expression. The key differences between using one or the other are:
+
+- [Hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting)
+
+    TLDR: hoising is the possibility of a function or variable to be called before it is defined in the code. Function declarations are hoisted, arrow functions are not.
+
+- [`this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this) context
+
+    TLDR: arrow functions are good at preserving context and keeping it contained and no not have a `this` binding; function declaration have their own `this` scope. The main remark with React is that when using [class components](https://react.dev/reference/react/Component) the `this` could easily get us in trouble.
+
+- Consistency with Hooks
+
+    TLDR: [React hooks](https://react.dev/reference/react/hooks) have been coded using a functional paradigm, so writing React components with arrow functions ensures consistency.
 
 ### Initial Render for the ToDo app
 
@@ -50,14 +67,37 @@ The first test for the application is a "simple" render of our page.
 
 This test introduced the concepts of the [ARIA Roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) and why they matter.
 
-In particular, this test focused on having the [landmark roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles#3._landmark_roles) in application as early as possible in the development phase. 
-
-
-🔜 🚧 
+In particular, this test focused on having the [landmark roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles#3._landmark_roles) in application as early as possible in the development phase.
 
 ### Displays a complete ToDo with a different style
 
+This test is an example of the few occasions in which styling can - and should be tested.
+
+As per the test definition, when the ToDo is completed the text becomes striked-through. This can be acheived by using _inline styles_ or applying different _CSS classes_ to the `<input type="text" />` according to the value of the `checkbox`. This means that user's interaction with the `checkbox` triggers a change on what they are seeing on their screen. In React this is called a [re-render](https://react.dev/reference/react/hooks). In order to trigger a re-render it is necessary to keep track of the value of the checkbox. In React this is done with a state variable and by using the [`useState`](https://react.dev/reference/react/useState) hook.
+
+#### Hooks
+
+Hooks were introduced in [React v16.8](https://legacy.reactjs.org/blog/2019/02/06/react-v16.8.0.html) and they solve several problems:
+
+- Extract common logic (like form handling or data fetching)
+- Maintain state and related functions
+- Use this same logic in multiple components without duplicating code
+
+Kent C. Dodds has a great [tutorial on creating our own useState hook](https://www.epicreact.dev/tutorials/build-react-hooks/introduction-to-usestate).
+
 ### Adds new ToDos to the list
+
+Adding a new ToDo item is a user interaction that should be ensured by the [button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button) element by having an event handler associated with your `button`. React and JSX ease this process with its `onClick` prop that invokes the necessary logic.
+
+
+
+There is a specific ARIA role that is used to identify a list of items - the [list role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/list_role). Each item on the list takes the [listitem role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listitem_role).
+
+Our application contains a list of todo items, i.e., the state of our application is an array of ToDo Items. Each item is defined by its status and its name and the applicaiton needs to keep track of these properties.
+
+
+
+🔜 🚧 
 
 ### Sorts the ToDos according to their status
 
