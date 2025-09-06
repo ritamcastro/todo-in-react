@@ -9,9 +9,7 @@
 		"typecheck:watch": "tsc --noEmit --watch",
 		"lint": "npx @biomejs/biome check --write ./src/ ./index.html",
 		"dev": "vite",
-		"build": "vite build",
-		"predeploy": "npm run build",
-  		"deploy": "gh-pages -d dist"
+		"build": "vite build"
 	},
 	"dependencies": {
 		"react": "^19.1.1",
