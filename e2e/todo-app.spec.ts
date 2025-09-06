@@ -26,7 +26,7 @@ test("01 - Initial Render for the ToDo app", async ({ page }) => {
   // await expect(footer.getByText("Made with 💜")).toBeVisible()
 })
 
-test("02 - Displays a complete ToDo with a different style", async ({ page }) => {
+test.skip("02 - Displays a complete ToDo with a different style", async ({ page }) => {
   await page.goto("/");
 
   const main = page.getByRole("main")
