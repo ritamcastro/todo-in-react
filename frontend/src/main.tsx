@@ -29,7 +29,8 @@ const router = createBrowserRouter([
       }
     ]
   }
-])
+], 
+{ basename: "/todo-in-react" })
 
 const rootContainer: Element | DocumentFragment | null = document.getElementById('root')
 
