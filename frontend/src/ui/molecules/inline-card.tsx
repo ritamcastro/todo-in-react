@@ -1,3 +1,4 @@
+import { Button, Checkbox, Input, ListItem, ListItemButton } from '@mui/material'
 import type React from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { ToDoItem } from '../../types/todo'
@@ -15,38 +16,35 @@ const InlineCard: React.FC<Props> = ({ item, onChangeText, onToggle, onDelete })
   const ariaLabelForCheckbox = `Mark todo "${item.text}" as ${item.isDone ? 'done' : 'not done'}`
 
   return (
-    <li key={item.id}>
-      <input
+    <ListItem key={item.id}>
+      <Checkbox
         aria-checked={item.isDone}
         aria-label={ariaLabelForCheckbox}
-        type="checkbox"
         checked={item.isDone}
         onChange={() => {
           onToggle()
         }}
       />
-      <input
+      <Input
         type="text"
         placeholder="Add a new todo"
         value={item.text}
         onChange={e => onChangeText(e.target.value)}
-        style={{ textDecoration: item.isDone ? 'line-through' : 'none' }}
+        style={{ textDecoration: item.isDone ? 'ListItemne-through' : 'none' }}
       />
-      <button
+      <ListItemButton
         aria-label="See more"
-        type="button"
         onClick={() => navigate(`/details/${item.id}`)}
       >
         👀
-      </button>
-      <button
-        aria-label="Delete"
-        type="button"
+      </ListItemButton>
+      <Button
         onClick={() => onDelete(item.id)}
+        aria-label="Delete"
       >
         🗑️
-      </button>
-    </li>
+      </Button>
+    </ListItem>
   )
 }
 
