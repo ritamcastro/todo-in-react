@@ -1,4 +1,3 @@
-import { Button, List } from '@mui/material'
 import { useTodos } from '../../hooks/use-todos'
 import InlineCard from '../molecules/inline-card'
 
@@ -7,7 +6,12 @@ const TodoList = () => {
 
   return (
     <>
-      <Button onClick={() => addTodo()}>New</Button>
+      <button
+        type="button"
+        onClick={() => addTodo()}
+      >
+        New
+      </button>
 
       {/* 
       See MDN on list and listitem
@@ -16,7 +20,7 @@ const TodoList = () => {
       to fix biome's linting error 
       https://biomejs.dev/linter/rules/use-semantic-elements/
       */}
-      <List
+      <ul
         style={{
           listStyle: 'none none',
           paddingInlineStart: 0,
@@ -32,7 +36,7 @@ const TodoList = () => {
             onDelete={() => onDeleteItem(item.id)}
           />
         ))}
-      </List>
+      </ul>
     </>
   )
 }

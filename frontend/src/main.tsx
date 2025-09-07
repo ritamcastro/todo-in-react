@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ToDoApp from './todo-app'
@@ -7,11 +7,6 @@ import DetailsErrorBoundary from './ui/organisms/details-error-boundary'
 import TodoList from './ui/organisms/todo-list'
 import GenericError from './ui/pages/generic-error'
 import Layout from './ui/templates/layout'
-
-import '@fontsource/roboto/300.css'
-import '@fontsource/roboto/400.css'
-import '@fontsource/roboto/500.css'
-import '@fontsource/roboto/700.css'
 
 const router = createBrowserRouter(
   [
